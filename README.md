@@ -1,6 +1,11 @@
 # ⛄ gyeo-bang-al
-겨울 방학 알고리즘 스터디 레포지토리입니다. 
+* 겨울 방학 알고리즘 스터디 레포지토리입니다. 
 
+<br>
+
+## ⛄ 현재 진행 상황
+* 1월 7일 오전 9시 30분 이전까지 스택, 큐, 덱, 스택의 활용까지 공부하고 ✔문제 완료하기
+* 기초코드 작성 문제집은 자유롭게 해결하기
 <br>
 
 ## ⛄ 스터디 진행 방식
@@ -27,8 +32,6 @@
 * [바킹독 실전 알고리즘 레파지토리](https://github.com/encrypted-def/basic-algo-lecture)
 * [실전 알고리즘 문제집](https://github.com/encrypted-def/basic-algo-lecture/blob/master/workbook.md#%EB%AC%B8%EC%A0%9C%EC%A7%91-%EA%B0%9C%EC%A0%95-%ED%9B%84-%EB%B2%84%EC%A0%84)
 <br>
-
-
 
 ## ⛄ 스터디 일정
 |주차|진도|문제풀이|완료날짜|
