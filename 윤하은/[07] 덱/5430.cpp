@@ -1,4 +1,4 @@
-//BOJ 5430 AC
+//BOJ 5430 AC 
 #include <bits/stdc++.h>
 using namespace std;
 int operateD(deque<int> & dq, bool direction)
