@@ -1,4 +1,5 @@
-//BOJ 1600 말이 되고픈 원숭이
+//[오답] BOJ 1600 말이 되고픈 원숭이
+//결과 : 틀렸습니다. 
 #include <bits/stdc++.h>
 using namespace std;
 int dxH[8] = {-1, -2, -1, -2, 1, 2, 1, 2};
