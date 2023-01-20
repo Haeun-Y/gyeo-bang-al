@@ -1,4 +1,4 @@
-//84퍼 시간 초과... 나중에 다시 풀어보고 싶음
+// 나중에 다시 풀어보고 싶음 (시간초과)
 
 #include<bits/stdc++.h>
 using namespace std;
