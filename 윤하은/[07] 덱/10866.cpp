@@ -1,4 +1,4 @@
-//BOJ 10866 덱
+//BOJ 10866 덱 
 #include <bits/stdc++.h>
 using namespace std;
 
