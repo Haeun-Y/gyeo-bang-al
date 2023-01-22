@@ -7,7 +7,7 @@ int operateD(deque<int> & dq, bool direction)
     
     //순행
     if(direction)
-        dq.pop_front();
+        dq.pop_front(); 
     
     //역행
     else
