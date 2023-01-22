@@ -1,6 +1,6 @@
 //BOJ 10845 큐
 #include <bits/stdc++.h>
-using namespace std;
+using namespace std; 
 
 int main(void)
 {

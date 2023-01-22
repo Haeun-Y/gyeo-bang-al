@@ -1,6 +1,6 @@
 //BOJ 18258 큐2
 #include <bits/stdc++.h>
-using namespace std;
+using namespace std; 
 
 int main(void)
 {

@@ -1,6 +1,6 @@
 //BOJ 2164 카드2
 #include <bits/stdc++.h>
-using namespace std;
+using namespace std; 
 
 int main(void)
 {
