@@ -1,4 +1,4 @@
-//BOJ 3986 좋은 단어
+//BOJ 3986 좋은 단어 
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -7,30 +7,28 @@ int main(void)
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     
-    string str;
-    int wordNum;
-    cin >> wordNum;
+    int n;
+    cin >> n;
+    
     int result = 0;
     
-    for(int i = 0; i<wordNum; i++)
+    for(int i = 0; i<n; i++)
     {
+        string str;
         cin >> str;
-        stack<char> letters;
         
-        for(int i  = 0; i< str.length(); i++)
+        stack<char> s;
+        
+        for(char ch:str)
         {
-            char ch = str[i];
-            if(!letters.empty() && letters.top() == ch)
-                letters.pop();
-                
-            else
-                letters.push(ch);
+            if(!s.empty() && s.top() == ch)
+                s.pop();
+            else s.push(ch);
         }
         
-        if(letters.empty()) result++;
-        
+        if(!s.empty()) result++;
     }
     
-    cout << result;
+    cout << result
     
 }
