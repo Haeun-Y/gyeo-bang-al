@@ -20,15 +20,15 @@ int main(void)
         stack<char> s;
         
         for(char ch:str)
-        {
+        {   
             if(!s.empty() && s.top() == ch)
                 s.pop();
             else s.push(ch);
         }
         
-        if(!s.empty()) result++;
+        if(s.empty()) result++;
     }
     
-    cout << result
+    cout << result;
     
 }
