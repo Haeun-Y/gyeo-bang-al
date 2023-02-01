@@ -5,11 +5,13 @@ vector<vector<int>> v;
 int nums[3] = {0, 0, 0};
 int isSameNum(int n, pair<int, int> start)
 {
-    int num = v[start.first][start.second];
+    int x = start.first;
+    int y = start.second;
+    int num = v[x][y];
     
-    for(int i = 0; i<n; i++)
+    for(int i = x; i<x+n; i++)
     {
-        for(int j = 0 ;j<n; j++)
+        for(int j = y; j<y+n; j++)
         {
             if(v[i][j] != num)
                 return -2;
@@ -24,7 +26,7 @@ void cutPaper(int n, pair<int, int> start)
     //종이가 모두 같은수로 되어있음
     if(num != -2)
     {
-        cout << "start : " << "(" << start.first << ", " << start.second << ")\tisSameNum : " << num << "\n";
+        //cout << "start : " << "(" << start.first << ", " << start.second << ")\tisSameNum : " << num << "\n";
         nums[num+1]++;
         return;
     }
@@ -37,7 +39,7 @@ void cutPaper(int n, pair<int, int> start)
         {
             for(int j= 0; j<n; j+=(n/3))
             {
-                cout << "call cutPaper(" << n/3 << ", {" << x+i << ", " << y+j << "})\n";
+                //cout << "n : " << n << "\t" << "call cutPaper(" << n/3 << ", {" << x+i << ", " << y+j << "})\n";
                 cutPaper(n/3, {x+i, y+j});
 
             }
@@ -48,8 +50,8 @@ void cutPaper(int n, pair<int, int> start)
 }
 int main(void)
 {
-    //ios::sync_with_stdio(false);
-    //cin.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
     int n;
     cin >> n;
@@ -66,7 +68,7 @@ int main(void)
             cin >> v[i][j];
     }
 
-    cutPaper(9, {0, 0});
+    cutPaper(n, {0, 0});
     cout << nums[0] << "\n";
     cout << nums[1] << "\n";
     cout << nums[2]; 
