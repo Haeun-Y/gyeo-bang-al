@@ -1,33 +1,30 @@
 //BOJ 1629 곱셈
 #include <bits/stdc++.h>
 using namespace std;
-long long calculate(long long a, long long b)
+long long func1(long long a, long long b, long long c)
 {
-  if(b == 0)
-    return 1;
-  //a^b = (a^2)^b/2
-  else
+  //a^b mod c = (a^(b/2) mod c * a^(b/2) mod c) mod c
+  if(b == 1) return a%c;
+  else if(b%2 == 1)//b가 홀수
+    return ((a%c) * func1(a, b-1, c))%c;
+
+  else//b가 짝수
   {
-    if(b%2==0)
-      return calculate(a*a, b/2);
-    else
-      return (a * calculate(a, b-1));
+    long long result = func1(a, b/2, c);
+    return (result * result)%c;
   }
-  
+
 }
-int main() {
-  //a b c
-  //a를 b번 곱한 수를 c로 나눈 나머지를 구하라
-  // x-r = x/k*x/y
-  // x%y = r
-  // 
-  //ios::sync_with_stdio(false);
-  //cin.tie(NULL);
+int main(void)
+{
+  
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
 
-  int a,b,c;
+  int a, b, c;
   cin >> a >> b >> c;
+  
+  //a^b % c
+  cout << func1(a, b, c);
 
-  cout << calculate((long long)a, (long long)b)%c;
-
-    
 }
