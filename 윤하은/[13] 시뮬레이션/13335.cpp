@@ -16,12 +16,7 @@ int crossBridge(vector<int> & v, int length, int load)
   while(!q.empty())
     {
       time++;
-      if(i < v.size() && curLoad + v[i] <= load && truckNum < length)
-      {
-        q.push({v[i], time});
-        curLoad += v[i++];
-        truckNum++;
-      }
+      
       if(q.front().second+length == time)
       {
         pair<int, int> truck = q.front();
@@ -29,17 +24,12 @@ int crossBridge(vector<int> & v, int length, int load)
         curLoad -= truck.first;
         truckNum--;
       }
-      /*while(curLoad + v[i] <= load && truckNum < length)
-        {
-          q.push({v[i], ++time});
-          if(q.front().second+length == time)
-          {
-            truckNum--;
-            
-          }
-          curLoad += v[i++];
-          truckNum++;
-        }*/
+      if(i < v.size() && curLoad + v[i] <= load && truckNum < length)
+      {
+        q.push({v[i], time});
+        curLoad += v[i++];
+        truckNum++;
+      }
       
       
     }
@@ -50,8 +40,8 @@ int crossBridge(vector<int> & v, int length, int load)
 }
 int main(void)
 {
-  //ios::sync_with_stdio(false);
-  //cin.tie(NULL);
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
 
   int truckNum, length, load;
   cin >> truckNum >> length >> load;
