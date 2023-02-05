@@ -1,6 +1,42 @@
 //BOJ 1074 Z
 #include <bits/stdc++.h>
 using namespace std;
+int zVisit(int n, int r, int c)
+{
+  if(n==0)
+    return 0;
+  else
+  {
+    int half = pow(2, n-1);
+    int half2 = half*half;
+    
+    //1번 사각형일 경우
+    if(r< half && c < half) 
+      return zVisit(n-1, r, c);
+    //2번 사각형일 경우
+    else if(r < half && c>= half)
+      return half2 + zVisit(n-1, r, c-half);
+    //3번 사각형일 경우
+    else if(r >= half && c < half)
+      return half2*2 + zVisit(n-1, r-half, c);
+    else //4번 사각형일 경우
+      return half2*3 + zVisit(n-1, r-half, c-half);
+  }
+  
+}
+int main(void)
+{
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
+
+  int n, r, c;
+  cin >> n >> r >> c;
+
+  cout << zVisit(n, r, c);
+  
+}
+/*#include <bits/stdc++.h>
+using namespace std;
 int visitNum; 
 int r;
 int c;
@@ -68,4 +104,4 @@ int main(void)
   zVisit2(row, {0, 0});
   cout << result;
   
-}
+}*/
