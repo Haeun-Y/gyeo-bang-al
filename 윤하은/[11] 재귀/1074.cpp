@@ -1,47 +1,57 @@
 //BOJ 1074 Z
 #include <bits/stdc++.h>
 using namespace std;
-int visitNum;
-vector<vector<int>> v; 
+int visitNum; 
+int r;
+int c;
+int result;
 int dx[4] = {0, 0, 1, 1};
 int dy[4] = {0, 1, 0, 1};
-void zVisit(int n, pair<int, int> start)
+void zVisit(int row, pair<int, int> start)
 {
   int x = start.first;
   int y = start.second;
-  if(n==0)
+  if(row==1)
   {
-    v[x][y] = visitNum++;
+    if(x == r && y == c)
+      result = visitNum;
+    visitNum++;
     return;
   }
   else
   {
-    int moves = pow(2, n-1);
-    zVisit(n-1, start);
-    zVisit(n-1, {x, y+moves});
-    zVisit(n-1, {x+moves, y});
-    zVisit(n-1, {x+moves, y+moves});
+    int moves = row/2;
+    zVisit(moves, start);
+    zVisit(moves, {x, y+moves});
+    zVisit(moves, {x+moves, y});
+    zVisit(moves, {x+moves, y+moves});
   }
   
 }
-void zVisit2(int n, pair<int, int> start)
+void zVisit2(int row, pair<int, int> start)
 {
   int x = start.first;
   int y = start.second;
-  if(n==1)
+  if(row==1)
   {
-    for(int i = 0; i<4; i++)
-      {
-        v[x+dx[i]][y+dy[i]] = visitNum++;
-      }
+    if(x == r && y == c)
+          result = visitNum;
+        visitNum++;
+    return;
   }
   else
   {
-    int moves = pow(2, n-1);
-    zVisit2(n-1, start);
-    zVisit2(n-1, {x, y+moves});
-    zVisit2(n-1, {x+moves, y});
-    zVisit2(n-1, {x+moves, y+moves});
+    int moves = row/2;
+    int moves2 = moves * moves;
+    for(int i = 0; i<4; i++)
+      {
+        int nx = x + dx[i] * moves;
+        int ny = y + dy[i] * moves;
+        if(nx <= r && nx+moves > r && ny <= c && ny+moves > c)
+          zVisit2(moves, {nx, ny});
+      
+        else visitNum += moves2;
+      }
     return;
   }
 }
@@ -50,26 +60,12 @@ int main(void)
   ios::sync_with_stdio(false);
   cin.tie(NULL);
 
-  int n, r, c;
+  int n;
   cin >> n >> r >> c;
 
   int row = pow(2, n);
 
-  for(int i = 0; i<row; i++)
-    {
-      vector<int> tmp(row, 0); 
-      v.push_back(tmp);
-    }
-
-  zVisit2(n, {0, 0});
-  cout << v[r][c];
-
-  /*
-  for(int i = 0; i<row; i++)
-    {
-      for(int j = 0; j<row; j++)
-        printf("%2d ", v[i][j]);
-      cout << "\n";
-    }*/
+  zVisit2(row, {0, 0});
+  cout << result;
   
 }
