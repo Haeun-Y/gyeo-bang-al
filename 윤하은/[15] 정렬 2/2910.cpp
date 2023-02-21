@@ -1,21 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
-bool isExist(vector<pair<int, int>> & v, int target)
+typedef struct element
+{
+	int num;
+	int times;
+	int initPos;
+
+}element;
+bool isExist(vector<element> & v, int target)
 {
     for(int i = 0; i< v.size(); i++)
     {
-        if(v[i].first == target)
+        if(v[i].num == target)
 		{
-			v[i].second++;
+			v[i].times++;
 			return true;
 		}
     }
 
 	return false;
 }
-bool cmp(pair<int, int> a, pair<int, int> b)
+bool cmp(element a, element b)
 {
-	return a.second > b.second;
+	if(a.times == b.times)
+		return a.initPos < b.initPos;
+	return a.times > b.times;
 }
 int main(void)
 {
@@ -25,7 +34,7 @@ int main(void)
     int n, c;
     cin >> n >> c;
     
-    vector<pair<int, int>> v;
+    vector<element> v;
     
     for(int i = 0; i<n; i++)
     {
@@ -33,14 +42,14 @@ int main(void)
 		cin >> num;
 
 		if(!isExist(v, num))
-			v.push_back({num, 1});
+			v.push_back({num, 1, i});
     }
 
 	sort(v.begin(), v.end(), cmp);
 
 	for(int i = 0; i < v.size(); i++)
 	{
-		for(int j = 0; j<v[i].second; j++)
-			cout << v[i].first << " ";
+		for(int j = 0; j<v[i].times; j++)
+			cout << v[i].num << " ";
 	}
 }
