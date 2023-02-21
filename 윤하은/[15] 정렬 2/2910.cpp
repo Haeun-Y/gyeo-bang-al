@@ -1,3 +1,29 @@
+/*
+#include <bits/stdc++.h>
+using namespace std;
+bool isExist(vector<pair<int, int>> & v, int target)
+{
+    for(int i = 0; i< v.size(); i++)
+    {
+        if(v[i].first == )
+    }
+}
+int main(void)
+{
+    //ios::sync_with_stdio(false);
+    //cin.tie(NULL);
+    
+    int n, c;
+    cin >> n >> c;
+    
+    vector<pair<int, int>> v;
+    
+    for(int i = 0; i<n; i++)
+    {
+        
+    }
+}
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
