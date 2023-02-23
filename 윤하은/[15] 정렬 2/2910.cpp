@@ -1,3 +1,5 @@
+//TODO : stable_sort 알아보기
+//https://cplusplus.com/reference/algorithm/stable_sort/
 #include <bits/stdc++.h>
 using namespace std;
 typedef struct element
@@ -26,6 +28,10 @@ bool cmp(element a, element b)
 		return a.initPos < b.initPos;
 	return a.times > b.times;
 }
+bool cmp2(element a, element b)
+{
+	return a.times > b.times;
+}
 int main(void)
 {
     ios::sync_with_stdio(false);
@@ -46,6 +52,7 @@ int main(void)
     }
 
 	sort(v.begin(), v.end(), cmp);
+	//stable_sort(v.begin(), v.end(), cmp2);
 
 	for(int i = 0; i < v.size(); i++)
 	{
