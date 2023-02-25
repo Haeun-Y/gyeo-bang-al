@@ -1,49 +1,62 @@
+//TODO : stable_sort 알아보기
+//https://cplusplus.com/reference/algorithm/stable_sort/
 #include <bits/stdc++.h>
 using namespace std;
-
-map <int, int> order; //index 저장
-
-bool cmp(pair<int, int>& a, pair<int, int>& b)
+typedef struct element
 {
-	if (a.second == b.second)
-		return order[a.first] < order[b.first];
-
-	return a.second > b.second;
-}
-
-int main()
-{
-	//freopen("test.txt", "r", stdin);
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
-
-	int N, C;
-	cin >> N >> C;
-
-	map<int, int> m;
 	int num;
+	int times;
+	int initPos;
 
-	for (int i = 0; i < N; i++)
-	{
-		cin >> num;
-		m[num]++;
-
-		if (order[num] == 0)
-			order[num] = i+1;
-	}
-	
-	vector<pair<int, int>> vec(m.begin(), m.end());
-
-	sort(vec.begin(), vec.end(), cmp);
-
-	for (auto x : vec)
-	{
-		for (int i = 0; i < x.second; i++)
+}element;
+bool isExist(vector<element> & v, int target)
+{
+    for(int i = 0; i< v.size(); i++)
+    {
+        if(v[i].num == target)
 		{
-			cout << x.first << " ";
+			v[i].times++;
+			return true;
 		}
-	}
+    }
 
-	return 0;
+	return false;
+}
+bool cmp(element a, element b)
+{
+	if(a.times == b.times)
+		return a.initPos < b.initPos;
+	return a.times > b.times;
+}
+bool cmp2(element a, element b)
+{
+	return a.times > b.times;
+}
+int main(void)
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n, c;
+    cin >> n >> c;
+    
+    vector<element> v;
+    
+    for(int i = 0; i<n; i++)
+    {
+		int num;
+		cin >> num;
+
+		if(!isExist(v, num))
+			v.push_back({num, 1, i});
+    }
+
+	sort(v.begin(), v.end(), cmp);
+	//stable_sort(v.begin(), v.end(), cmp2);
+
+	for(int i = 0; i < v.size(); i++)
+	{
+		for(int j = 0; j<v[i].times; j++)
+			cout << v[i].num << " ";
+	}
 }
