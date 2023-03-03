@@ -1,5 +1,4 @@
 //BOJ 2193 이친수
-//틀렸습니다. 
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -11,7 +10,7 @@ int main(void)
     int n;
     cin >> n;
     
-    vector<int> pinary(n+1);
+    vector<long long> pinary(n+1);
     
     pinary[1] = pinary[2] = 1;
     
