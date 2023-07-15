@@ -12,23 +12,25 @@ N개의 자연수 중에서 M개를 고른 수열
 수열은 사전 순으로 증가하는 순서로 출력해야 한다.
 */
 
-# include <bits/stdc++.h>
-using namespace std;
 
 int N, M, user[8], arr[10];
+bool isused[8];
 
-void func(int k, int idx) {
-	if (idx > N) return; 
+void func(int k) {
 	if (k == M) {
 		for (int i = 0; i < M; i++)
 			cout << arr[i] << ' ';
 		cout << '\n';
 		return;
 	}
-	arr[k] = user[idx];
-	func(k + 1, 0);
-	func(k, idx + 1);
-
+	for (int i = 0; i < N; i++) {
+		if (!isused[i]) {
+			arr[k] = user[i];
+			isused[i] = 1;
+			func(k + 1);
+			isused[i] = 0;
+		}
+	}
 }
 
 int main(void) {
@@ -38,5 +40,5 @@ int main(void) {
 	for (int i = 0; i < N; i++)
 		cin >> user[i];
 	sort(user, user + N);
-	func(0, 0);
+	func(0);
 }
