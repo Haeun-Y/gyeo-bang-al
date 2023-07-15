@@ -14,13 +14,13 @@ N이 주어졌을 때, P(N)을 구하는 프로그램을 작성하시오.
 */
 
 
-int T, N, dp[103];
+int T, N; long long dp[103];
 int main(void) {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     dp[1] = dp[2] = dp[3] = 1;
-    for (int i = 4; i <= 100 i++) dp[i] = dp[i - 1] + dp[i - 2];
+    for (int i = 4; i <= 100 i++) dp[i] = dp[i - 2] + dp[i - 3];
     
     cin >> T;
     while (T--) {
