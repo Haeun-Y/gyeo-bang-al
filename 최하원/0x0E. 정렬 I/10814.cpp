@@ -8,7 +8,6 @@ bool func(string a, string b) {
 	if a >= b return true;
 	else return false;
 }
-
 int main(void) {
 	int n, age; string name;
 	cin >> n;
