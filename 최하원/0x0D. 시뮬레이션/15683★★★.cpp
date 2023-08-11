@@ -1,3 +1,4 @@
+// https://www.acmicpc.net/problem/15683
 /*
 입력
 첫째 줄에 사무실의 세로 크기 N과 가로 크기 M이 주어진다. (1 ≤ N, M ≤ 8)
