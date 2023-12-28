@@ -1,3 +1,6 @@
+//231228
+//BOJ 2583 영역 구하기
+//SILVER 1
 #include <iostream>
 #include <algorithm>
 #include <vector>
