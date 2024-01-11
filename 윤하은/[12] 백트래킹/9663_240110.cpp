@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int chess[20][20] = {-1, };
+vector<vector<int>> chess;
 vector<vector<pair<int, int>>> rightDown;
 vector<vector<pair<int, int>>> rightUp;
 int result;
@@ -16,56 +16,34 @@ void checkBoard(pair<int, int> target, int row, bool flg)
     
     for(int i = 0; i<n; i++)
     {
-        if(flg && chess[target.first][i] == -1)
+        if(flg && chess[target.first][i] == -1)//-1 -> row
             chess[target.first][i] = row;
-        else if(!flg && chess[target.first][i] == row)
+        else if(!flg && chess[target.first][i] == row)//row -> -1
             chess[target.first][i] = -1;
-        if(flg && chess[i][target.second] == -1)
+        if(flg && chess[i][target.second] == -1)//-1 -> row
             chess[i][target.second] = row; 
-        else if(!flg && chess[i][target.second] == row)
+        else if(!flg && chess[i][target.second] == row)//row -> -1
             chess[i][target.second] = -1; 
-        //cout << "(" << target.first << ", " << i << ") is turned to " << (flg?"true":"false") << "\n"; 
-        //cout << "(" << i << ", " << target.second << ") is turned to " << (flg?"true":"false") << "\n"; 
     }
     
     for(int i = 0; i<rightDown[rightDownNum].size(); i++)
     {
         pair<int, int> cur = rightDown[rightDownNum][i];
-        if(flg && chess[cur.first][cur.second] == -1)
+        if(flg && chess[cur.first][cur.second] == -1)//-1 -> row
             chess[cur.first][cur.second] = row;
-        else if(!flg && chess[cur.first][cur.second] == row)
+        else if(!flg && chess[cur.first][cur.second] == row)//row -> -1
             chess[cur.first][cur.second] = -1;
-        //cout << "(" << cur.first << ", " << cur.second << ") is turned to " << (flg?"true":"false") << "\n"; 
     }
     
     for(int i = 0; i<rightUp[rightUpNum].size(); i++)
     {
         pair<int, int> cur = rightUp[rightUpNum][i];
-        if(flg && chess[cur.first][cur.second] == -1)
+        if(flg && chess[cur.first][cur.second] == -1)//-1 -> row
             chess[cur.first][cur.second] = row;
-        else if(!flg && chess[cur.first][cur.second] == row)
+        else if(!flg && chess[cur.first][cur.second] == row)//row -> -1
             chess[cur.first][cur.second] = -1;
-        //cout << "(" << cur.first << ", " << cur.second << ") is turned to " << (flg?"true":"false") << "\n"; 
     }
     
-}
-void printDiagonals()
-{
-    for(int i = 0; i<rightDown.size(); i++)
-    {
-        cout << "rightDown " << i << "\n";
-        for(int j = 0; j<rightDown[i].size(); j++)
-            cout << rightDown[i][j].first << ", " << rightDown[i][j].second << "\n";
-        cout << "\n";
-    }
-    
-    for(int i = 0; i<rightUp.size(); i++)
-    {
-        cout << "rightUp " << i << "\n";
-        for(int j = 0; j<rightUp[i].size(); j++)
-            cout << rightUp[i][j].first << ", " << rightUp[i][j].second << "\n";
-        cout << "\n";
-    }
 }
 void setDiagonals()
 {
@@ -80,32 +58,6 @@ void setDiagonals()
             rightUp[i+j].push_back(make_pair(i, j));
         }
     }
-    //printDiagonals();
-}
-void printChess(int idx)
-{
-    cout << "put " << idx+1 << " queens\n";
-    for(int i = 0; i<n; i++)
-    {
-        for(int j = 0; j<n; j++)
-        {
-            if(chess[i][j] >= 0) cout << "#";
-            else cout << ".";
-        }
-        cout << "\n";
-    }
-}
-void printChess()
-{
-    for(int i = 0; i<n; i++)
-    {
-        for(int j = 0; j<n; j++)
-        {
-            if(chess[i][j] >= 0) cout << "#";
-            else cout << ".";
-        }
-        cout << "\n";
-    }
 }
 //row queen을 배치하는 함수
 void putQueens(int row)
@@ -113,8 +65,6 @@ void putQueens(int row)
     if(row == n)
     {
         result++;
-        //printChess();
-        //cout << "result : " << result << "\n";
         return;
     }
     else
@@ -123,7 +73,6 @@ void putQueens(int row)
         {
             if(chess[row][i] != -1) continue;
             pair<int, int> cur = make_pair(row, i);
-            //cout << "put " << row << "th queen : (" << row << ", " << i << ")\n";
             checkBoard(cur, row, true);
             putQueens(row+1);
             checkBoard(cur, row, false);
@@ -138,9 +87,9 @@ int main()
     cin.tie(NULL);
     
     cin >> n;
-    
+    chess = vector<vector<int>>(n, vector<int>(n, -1));
+
     setDiagonals();
     putQueens(0);
     cout << result;
-    
 }
