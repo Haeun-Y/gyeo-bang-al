@@ -1,3 +1,6 @@
+//240113
+//BOJ 15666 N과 M(12)
+//SILVER 2
 #include <iostream>
 #include <vector>
 #include <algorithm>
