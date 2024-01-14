@@ -1,7 +1,3 @@
-//TODO : remove tmp_print
-//240114
-//BOJ 1941 소문난 칠공주
-//GOLD 3
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -24,6 +20,12 @@ void find7princesses(int idx, int sNum, pair<int, int> pos)
         }
         return;
     }
+    //이거 분기하는 위치가 좀 별로인듯
+    /*else if(4 - sNum > PRINCESS_NUM - idx)
+    {
+        cout << "reamained princess : " << PRINCESS_NUM - idx << ", 4-sNum : " << 4 - sNum << "\n";
+        return;
+    }*/
     else
     {
         int curSNum = (students[pos.first][pos.second])? sNum+1 : sNum;
