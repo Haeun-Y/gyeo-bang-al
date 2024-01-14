@@ -1,4 +1,5 @@
-//240113 -> 틀림, 로직 변경해야함
+//TODO : remove tmp_print
+//240114
 //BOJ 1941 소문난 칠공주
 //GOLD 3
 #include <iostream>
