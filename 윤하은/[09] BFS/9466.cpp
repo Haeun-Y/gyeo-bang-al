@@ -1,8 +1,9 @@
-//240106
+//240103
 //BOJ 9466 텀 프로젝트
 //GOLD 3
 #include <iostream>
 #include <queue>
+#include <vector>
 using namespace std;
 void printQueue(queue<int> q)
 {
@@ -14,7 +15,6 @@ void printQueue(queue<int> q)
     }
     cout << "\n";
 }
-//return the number of students in group.
 int findTeam(int &n, vector<int>& students)
 {
     int result = 0;
