@@ -1,69 +1,45 @@
-//BOJ 11055 가장 큰 증가 부분 수열
-//틀렸습니다. 
-//문제 풀이 다시 정리하기
-#include <bits/stdc++.h>
+//240123
+//BOJ 11055 가장 큰 증가하는 부분 수열
+//SILVER 2
+//시간 초과
+#include <iostream>
+#include <vector>
 using namespace std;
-bool cmp(pair<int, int> a, pair<int, int> b)
+int n, result;
+vector<int> seq;
+void func1(int idx, int beforeElement, int sum)
 {
-    return a.first < b.first;
+    if(idx == n)
+    {
+        if(sum > result)
+            result = sum;
+        return;
+    }
+    else
+    {
+        if(seq[idx] >= beforeElement)
+        {
+            func1(idx+1, seq[idx], sum + seq[idx]);
+            func1(idx+1, beforeElement, sum);
+        }
+        else
+            func1(idx+1, beforeElement, sum);
+        
+    }
+
 }
 int main(void)
 {
     //ios::sync_with_stdio(false);
     //cin.tie(NULL);
-    
-    int n;
+
     cin >> n;
-
-    vector<pair<int, int>> seq(n);
-    vector<int> sum(n);
-
+    seq = vector<int>(n, 0);
     for(int i = 0; i<n; i++)
-    {
-        cin >> seq[i].first;
-        seq[i].second = i;
-    }
+        cin >> seq[i];
 
-    sort(seq.begin(), seq.end(), cmp);
+    func1(0, 0, 0);
 
-    /*
-    for(int i = 0; i<n; i++)
-        cout << seq[i].first << " ";
-    cout << "\n";
-    */
+    cout << result;
     
-    sum[n-1] = seq[n-1].first;
-
-    pair<int, int> result = {sum[n-1], seq[n-1].second};
-    
-    for(int i = n-2; i>=0; i--)
-    {
-
-        if(seq[i].second < result.second)
-        {
-            sum[i] = result.first = result.first + seq[i].first;
-            result.second = seq[i].second;
-        }
-
-        else
-        {
-            sum[i] = seq[i].first;
-            if(seq[i+1].second > seq[i].second)
-                sum[i] += sum[i+1];
-            
-            if(sum[i] > result.first)
-            {
-                result.first = sum[i];
-                result.second = seq[i].second;
-            }
-            
-        }
-
-        //cout << "result : " << result.first << ", " << result.second << "\n";
-        //cout << sum[i] << "\n";
-
-
-    }
-
-    cout << result.first;
 }
