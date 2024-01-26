@@ -7,47 +7,41 @@
 using namespace std;
 typedef struct
 {
-    int startDay;
-    int finishDay;
-    int pay;
+    int startDate;
+    int endDate;
+    int profit;
 }reservation;
 int n;
 vector<reservation> consulting;
-bool cmp(reservation a, reservation b)
+long long computeMaxProfit()
 {
-    return a.finishDay < b.finishDay;
-}
-long long func1()
-{
-    int result = 0;
-    for(int i = 0; i<n; i++)
-    {
-        if(i > 0 && consulting[i-1].finishDay == consulting[i].finishDay)
-        {
-            int beforePay = consulting[i-1].pay;
-            int curPay = consulting[i].pay;
-            if(beforePay < curPay)
-                result = result - beforePay + curPay;
-        }
-
-        else
-            result += consulting[i].pay;
-    }
-
-}
-int main(void)
-{
-    //ios::sync_with_stdio(false);
-    //cin.tie(NULL);
-    cin >> n;
+    vector<int> maxProfit(n+1, 0);
 
     for(int i = 1; i<=n; i++)
     {
-        int t, p;
-        cin >> t >> p;
-        consulting.push_back({i, i+t-1, p});
+        reservation cur = consulting[i];
+        maxProfit[cur.startDate] = max(maxProfit[i-1], maxProfit[i]); 
+        
+        if(consulting[i].endDate > n) continue;
+        maxProfit[cur.endDate] = max(maxProfit[cur.endDate], maxProfit[i-1] + cur.profit);
     }
 
-    sort(consulting.begin(), consulting.end(), cmp);
-    cout << func1();
+    return *max_element(maxProfit.begin(), maxProfit.end());
+}
+int main(void)
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    cin >> n;
+
+    consulting = vector<reservation>(n+1, {0, 0, 0});
+    for(int i = 1; i<=n; i++)
+    {
+        consulting[i].startDate = i;
+        cin >> consulting[i].endDate >> consulting[i].profit;
+        consulting[i].endDate += (i-1);
+    }
+
+    cout << computeMaxProfit();
 }
