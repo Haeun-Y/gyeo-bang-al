@@ -1,38 +1,47 @@
-//BOJ 15486 퇴사 2
-//틀렸습니다.
-#include <bits/stdc++.h>
+//240124
+//BOJ 15486 퇴사2
+//SILVER 3
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
-
-int main(void)
+typedef struct
 {
-    //ios::sync_with_stdio(false);
-    //cin.tie(NULL);
-
-    int n;
-    cin >> n;
-    
-    vector<pair<int, int>> consulting(n+1);
-    vector<int> profits(n+2);
+    int startDate;
+    int endDate;
+    int profit;
+}reservation;
+int n;
+vector<reservation> consulting;
+long long computeMaxProfit()
+{
+    vector<int> maxProfit(n+1, 0);
 
     for(int i = 1; i<=n; i++)
     {
-        cin >> consulting[i].first;//Ti
-        cin >> consulting[i].second;//Pi
+        reservation cur = consulting[i];
+        maxProfit[cur.startDate] = max(maxProfit[i-1], maxProfit[i]); 
+        
+        if(consulting[i].endDate > n) continue;
+        maxProfit[cur.endDate] = max(maxProfit[cur.endDate], maxProfit[i-1] + cur.profit);
     }
 
-    for(int i = n; i>=1; i--)
+    return *max_element(maxProfit.begin(), maxProfit.end());
+}
+int main(void)
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    cin >> n;
+
+    consulting = vector<reservation>(n+1, {0, 0, 0});
+    for(int i = 1; i<=n; i++)
     {
-        if(consulting[i].first + i > n + 1) continue;
-
-        profits[i] = max(profits[i+1], profits[i+consulting[i].first] + consulting[i].second);
+        consulting[i].startDate = i;
+        cin >> consulting[i].endDate >> consulting[i].profit;
+        consulting[i].endDate += (i-1);
     }
 
-    //cout << profits[1];
-
-    int maxProfit = profits[1];
-
-    for(int i = 2; i<= n; i++)
-        maxProfit = max(maxProfit, profits[i]);
-
-    cout << maxProfit;
+    cout << computeMaxProfit();
 }
