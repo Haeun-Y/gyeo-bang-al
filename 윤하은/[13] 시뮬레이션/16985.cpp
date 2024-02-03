@@ -1,99 +1,142 @@
-#include <bits/stdc++.h>
-using namespace std; 
-int dy[6] = { 0,0,0,0,1,-1 }; 
-int dx[6] = { 0,0,1,-1,0,0 }; 
-int dz[6] = { 1,-1,0,0,0,0 }; 
-const int n = 5; 
-int ret; 
-int BFS(vector<vector<vector<int>>>& board) 
-{ 	
-  if (board[0][0][0] == 0) 
-    return -1; 	
-  int d[n][n][n]; 	
-  memset(d, -1, sizeof(d)); 	
-  queue<pair<int, pair<int, int>>> q; 	
-  q.push({ 0,{0,0} }); 	
-  d[0][0][0] = 0; 	
-  while (!q.empty()) 	
-  { 		
-    int z = q.front().first; 		
-    int x = q.front().second.second; 		
-    int y = q.front().second.first; 		
-    q.pop(); 		
-    for (int i = 0; i < 6; ++i) 		
-    { 			
-      int ny = y + dy[i]; 			
-      int nx = x + dx[i]; 			
-      int nz = z + dz[i]; 			
-      if (!(0 <= ny && ny < n && 0 <= nx && nx < n && 0<= nz && nz < n)) continue; 			 			
-      if (board[nz][ny][nx] ==1 && d[nz][ny][nx] == -1) { 				d[nz][ny][nx] = d[z][y][x] + 1; 				
-        q.push({ nz,{ny,nx} }); 			
-        } 		
-      } 	
-    } 	 	
-  return d[n-1][n-1][n-1]; 
-} 
-void rotate(vector<vector<int>>& b) 
-{ 	//90도 회전시킨다 	
-  vector<vector<int>> temp(n, vector<int>(n)); 	
-  for (int i = 0; i < n; ++i) 		
-    for (int j = 0; j < n; ++j) 		
-    { 			
-      temp[i][n-1-j] = b[j][i]; 		
-    } 	
-  for (int i = 0; i < n; ++i) 		
-    for (int j = 0; j < n; ++j) 		
-    { 			
-      b[i][j] = temp[i][j]; 		
+//240203
+//BOJ 16985 Maaaaaaaaaze
+//GOLD 2
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+const int BOARD_NUM = 5;
+const int MAX_ROUTE = BOARD_NUM * BOARD_NUM * BOARD_NUM + 1;
+int minRoute = MAX_ROUTE;
+int dz[6] = {-1, 1, 0, 0, 0, 0};
+int dx[6] = {0, 0, -1, 1, 0, 0};
+int dy[6] = {0, 0, 0, 0, -1, 1};
+vector<vector<vector<bool>>> boards(BOARD_NUM, vector<vector<bool>>(BOARD_NUM, vector<bool>(BOARD_NUM, false)));
+vector<vector<vector<bool>>> maze(BOARD_NUM, vector<vector<bool>>(BOARD_NUM, vector<bool>(BOARD_NUM, false)));
+vector<bool> isUsed(BOARD_NUM, false);
+typedef struct
+{
+  int z;
+  int x;
+  int y;
+  int dist;
+}block;
+int coumputeRoute()
+{
+  if(!maze[0][0][0]) return MAX_ROUTE;
+  block destination = {4, 4, 4, 0};
+  queue<block> q;
+  vector<vector<vector<bool>>> isVisited(BOARD_NUM, vector<vector<bool>>(BOARD_NUM, vector<bool>(BOARD_NUM, false)));
+  q.push({0, 0, 0, 0});
+  isVisited[0][0][0] = true;
+
+  while(!q.empty())
+  {
+    block cur = q.front();
+    q.pop();
+
+    for(int i = 0; i<6; i++)
+    {
+      int nz = cur.z + dz[i];
+      int nx = cur.x + dx[i];
+      int ny = cur.y + dy[i];
+
+      if(nz < 0 || nz >= BOARD_NUM || nx < 0 || nx >= BOARD_NUM || ny < 0 || ny >= BOARD_NUM) continue;
+      if(isVisited[nz][nx][ny] || !maze[nz][nx][ny]) continue;
+
+      if(nz == destination.z && nx == destination.x && ny == destination.y)
+        return cur.dist+1;
+
+      q.push({nz, nx, ny, cur.dist+1});
+      isVisited[nz][nx][ny] = true;
     }
-} 
-void solve(int begin, vector<vector<vector<int>>>& board) { 	
-  if (begin == n) 
-  { 		
-    return; 	
-  } 	
-  for (int i = 0; i < 4; ++i) 	
-  { 		
-    int cand = BFS(board); 		
-    if (cand != -1) 
-    { 			
-      if (ret == -1 || ret > cand) 				
-        ret = cand; 		
-    } 		
-    solve(begin + 1, board); 		
-    rotate(board[begin]); 	
-    } 
-  } 
-int main() 
-{ 	
-  vector<vector<vector<int>>> first(n); 	
-  for (int i = 0; i < n; ++i) 
-  { 		
-    first[i].resize(n, vector<int>(n)); 		
-    for (int j = 0; j < n; ++j) 			
-      for (int k = 0; k < n; ++k) 			
-      { 				
-        cin >> first[i][j][k]; 			
-      } 	
-  } 	
-  vector<int> order; 	
-  for (int i = 0; i < n; ++i) 
-  { 		
-    order.push_back(i); 	
-  } 	
-  int ans = -1; 	
-  ret = -1; 	
-  do 
-  { 		
-    vector<vector<vector<int>>> board(n); 		
-    for (int i = 0; i < n; ++i) 			
-      board[order[i]] = first[i]; 		
-    solve(0, board); 		
-    if (ret != -1) 
-    { 			
-      if (ans == -1 || ans > ret) 				
-        ans = ret; 		
-    } 	
-  } while (next_permutation(order.begin(), order.end())); 	cout << ans << "\n"; 	
-  return 0; 
+
+  }
+
+  return MAX_ROUTE;
+
+}
+void rotateBoard(vector<vector<bool>>& v, int boardIdx, int rotateNum)
+{
+  if(rotateNum == 0)
+    v = boards[boardIdx];
+  else if(rotateNum == 1)
+  {
+    for(int i = 0; i<BOARD_NUM; i++)
+    {
+      for(int j = 0; j<BOARD_NUM; j++)
+        v[j][4-i] = boards[boardIdx][i][j];
+    }
+  }
+  else if(rotateNum == 2)
+  {
+    for(int i = 0; i<BOARD_NUM; i++)
+    {
+      for(int j = 0; j<BOARD_NUM; j++)
+        v[4-i][4-j] = boards[boardIdx][i][j];
+    }
+
+  }
+  else
+  {
+    for(int i = 0; i<BOARD_NUM; i++)
+    {
+      for(int j = 0; j<BOARD_NUM; j++)
+        v[4-j][i] = boards[boardIdx][i][j];
+    }
+  }
+  
+
+}
+void selectBoard(int idx)
+{
+  if(idx >= BOARD_NUM)
+  {
+    int route = coumputeRoute();
+    if(route < minRoute) minRoute = route;
+  }
+  else
+  {
+    for(int i = 0; i<BOARD_NUM; i++)
+    {
+      if(isUsed[i]) continue;
+      isUsed[i] = true;
+      for(int j = 0; j<4; j++)
+      {
+        rotateBoard(maze[idx],i, j);
+        selectBoard(idx+1);
+      }
+      isUsed[i] = false;
+    }
+
+  }
+
+  
+}
+void printMinRoute()
+{
+  if(minRoute == MAX_ROUTE)
+    cout << "-1";
+  else cout << minRoute;
+}
+int main(void)
+{
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
+
+  for(int i = 0; i<BOARD_NUM; i++)
+  {
+    for(int j = 0; j<BOARD_NUM; j++)
+    {
+      for(int k = 0; k<BOARD_NUM; k++)
+      {
+        int num;
+        cin >> num;
+        boards[i][j][k] = num;
+      }
+    }
+  }
+
+  selectBoard(0);
+  printMinRoute();
 }
