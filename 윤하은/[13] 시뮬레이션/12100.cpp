@@ -26,85 +26,150 @@ void moveBlocks(vector<vector<int>>& v, char direction)//u:up, d:down, l:left, r
 {
     if(direction == 'u')
     {
-        int movedIdx = 0;
         for(int col = 0; col<n; col++)
         {
             for(int row = 0; row<n; row++)
             {
+                //cout << "v[" << row << "][" << col << "] : " << v[row][col] << "\n";
+                if(v[row][col] == 0) continue;
                 for(int k = row+1; k<n; k++)
                 {
-                    if(v[row][col] == v[row][k])
+                    if(v[k][col] == 0)
+                        continue;
+                    else
                     {
-                        v[row][movedIdx++] = v[row][col] + v[row][k];
-                        row = k+1;
+                        if(v[row][col] == v[k][col])
+                        {
+                            v[row][col] *= 2;
+                            v[k][col] = 0;
+                            row = k;
+                        }
                         break;
                     }
                 }
             }
+            //print2048(v);
+            int movedIdx = 0;
+            for(int row = 0; row < n; row++)
+            {
+                if(v[row][col] != 0)
+                    v[movedIdx++][col] = v[row][col];
+            }
+            for(;movedIdx < n; movedIdx++)
+                v[movedIdx][col] = 0;
+            //cout << "after remove 0s\n";
+            //print2048(v);
         }
 
     }
     else if(direction == 'd')
     {
-        int movedIdx = n-1;
         for(int col = 0; col<n; col++)
         {
             for(int row = n-1; row>=0; row--)
             {
+                //cout << "v[" << row << "][" << col << "] : " << v[row][col] << "\n";
+                if(v[row][col] == 0) continue;
                 for(int k = row-1; k>=0; k--)
                 {
-                    if(v[row][col] == v[row][k])
+                    if(v[k][col] == 0) continue;
+                    else
                     {
-                        v[row][movedIdx--] = v[row][col] + v[row][k];
-                        row = k-1;
+                        if(v[row][col] == v[k][col])
+                        {
+                            v[row][col] *= 2;
+                            v[k][col] = 0;
+                            row = k;
+                        }
                         break;
                     }
                 }
             }
+            //print2048(v);
+            int movedIdx = n-1;
+            for(int row = n-1; row >= 0; row--)
+            {
+                if(v[row][col] != 0)
+                    v[movedIdx--][col] = v[row][col];
+            }
+            for(;movedIdx >= 0; movedIdx--)
+                v[movedIdx][col] = 0;
+            //cout << "after remove 0s\n";
+            //print2048(v);
         }
+        
 
     }
     else if(direction == 'l')
     {
-        int movedIdx = 0;
-        for(int row = 0; row<n; row++)
+        for(int row = 0; row < n; row++)
         {
-            for(int col = 0; col<n; col++)
+            for(int col = 0; col < n; col++)
             {
-                for(int k = col+1; k<n; k++)
+                if(v[row][col] == 0) continue;
+                for(int k = col + 1; k < n; k++)
                 {
-                    if(v[row][col] == v[row][k])
+                    if(v[row][k] == 0) continue;
+                    else
                     {
-                        v[row][movedIdx++] = v[row][col] + v[row][k];
-                        col = k+1;
+                        if(v[row][col] == v[row][k])
+                        {
+                                v[row][col] *= 2;
+                                v[row][k] = 0;
+                                col = k;
+                        }
                         break;
                     }
                 }
             }
+            int movedIdx = 0;
+            for(int col = 0; col <n; col++)
+            {
+                if(v[row][col] != 0)
+                    v[row][movedIdx++] = v[row][col];
+            }
+            for(; movedIdx < n; movedIdx++)
+                v[row][movedIdx] = 0;
         }
 
+            
     }
     else//direction == 'r' 
     {
-        int movedIdx = 0;
-        for(int row = 0; row<n; row++)
+        for(int row = 0; row < n; row++)
         {
-            for(int col = 0; col<n; col++)
+            for(int col = n-1; col >= 0; col--)
             {
-                for(int k = col+1; k<n; k++)
+                if(v[row][col] == 0) continue;
+                for(int k = col - 1; k >= 0; k--)
                 {
-                    if(v[row][col] == v[row][k])
+                    if(v[row][k] == 0) continue;
+                    else
                     {
-                        v[row][movedIdx++] = v[row][col] + v[row][k];
-                        row = k+1;
+                        if(v[row][col] == v[row][k])
+                        {
+                            v[row][col] *= 2;
+                            v[row][k] = 0;
+                            col = k;
+                        }
                         break;
                     }
+
                 }
+                
             }
+
+            int movedIdx = n-1;
+            for(int col = n-1; col >= 0; col--)
+            {
+                if(v[row][col] != 0)
+                    v[row][movedIdx--] = v[row][col];
+            }
+            for(; movedIdx >= 0; movedIdx--)
+                v[row][movedIdx] = 0;
         }
-
+        
     }
-
 }
 //v : move-1까지의 이동을 완료한 벡터
 void play2048(vector<vector<int>> v, int move)
@@ -131,8 +196,9 @@ void play2048(vector<vector<int>> v, int move)
 }
 int main(void)
 {
-    //ios::sycn_with_stdio(false);
-    //cin.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    
     cin >> n;
 
     board = vector<vector<int>>(n, vector<int>(n, 0));
