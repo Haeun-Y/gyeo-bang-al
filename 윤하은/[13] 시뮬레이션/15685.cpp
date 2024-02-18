@@ -17,18 +17,19 @@ vector<vector<bool>> dragonCurve;
 void findDragonCurve(vector<dragon>& v)
 {
     int size = v.size();
+    pair<int, int> curEnd = v[size-1].end;
 
     for(int i = size-1; i>= 0; i--)
     {
         dragon cur;
-        cur.start = v[i].end;
-        if(v[i].direction%2 == 0)
-            cur.direction = v[i].direction + 1;
-        else cur.direction = v[i].direction - 1;
+        cur.start = curEnd;
+        cur.direction = (v[i].direction + 1)%4;
         cur.end.first = cur.start.first + dx[cur.direction];
         cur.end.second = cur.start.second + dy[cur.direction];
+        curEnd = cur.end;
         v.push_back(cur);
-        dragonCurve[cur.start.first][cur.start.first] = dragonCurve[cur.end.first][cur.end.first] = true;
+        dragonCurve[cur.start.first][cur.start.second] = dragonCurve[cur.end.first][cur.end.second] = true;
+        //cout << cur.direction << " : [" << cur.start.first << ", " << cur.start.second << "] -> [" << cur.end.first << ", " << cur.end.second << "]\n";
     }
 
 }
@@ -51,7 +52,7 @@ int findDragonSquare()
                 int nx = cur.first + sx[k];
                 int ny = cur.second + sy[k];
 
-                if(dragonCurve[nx][ny])
+                if(!dragonCurve[nx][ny])
                 {
                     isDragonSquare = false;
                     break;
@@ -66,8 +67,8 @@ int findDragonSquare()
 }
 int main(void)
 {
-    //ios::sync_with_stdio(false);
-    //cin.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
     int dragonCurveNum;
     cin >> dragonCurveNum;
@@ -83,7 +84,7 @@ int main(void)
         cur.end.first = cur.start.first + dx[cur.direction];
         cur.end.second = cur.start.second + dy[cur.direction];
         dragonCurve[cur.start.first][cur.start.second] = dragonCurve[cur.end.first][cur.end.second] = true;
-
+        //cout << cur.direction << " : [" << cur.start.first << ", " << cur.start.second << "] -> [" << cur.end.first << ", " << cur.end.second << "]\n";
         vector<dragon> v;
         v.push_back(cur);
 
