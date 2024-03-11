@@ -13,13 +13,13 @@ bool isIncluded(int x, int y, int r1, int r2)
 }
 long long solution(int r1, int r2) {
     long long answer = 0;
-    for(int x = -r2; x<= r2; x++)
+    for(int x = -r2; x< 0; x++)
     {
-        for(int y = -r2; y<= r2; y++)
+        for(int y = -r2; y< 0; y++)
         {
             if(isIncluded(x, y, r1, r2))
                 answer++;
         }
     }
-    return answer;
+    return answer * 4 + (r2-r1+1) * 4;
 }
