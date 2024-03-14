@@ -3,47 +3,47 @@
 //Lv.2
 #include <bits/stdc++.h>
 using namespace std;
-int computeFatigue(vector<string>& minerals, int idx, int pickType)
+int computeFatigue(int pickType, int startIdx, int end, vector<string>& minerals)
 {
     map<string, int> dia = {{"diamond", 1}, {"iron", 1}, {"stone", 1}};
     map<string, int> iron = {{"diamond", 5}, {"iron", 1}, {"stone", 1}};
     map<string, int> stone = {{"diamond", 25}, {"iron", 5}, {"stone", 1}};
-    int total = 0;
     
-    for(int i = idx; i<idx+5; i++)
+    int fatigue = 0;
+    for(int i = startIdx; i< end; i++)
     {
         if(pickType == 0)
-            total += dia[minerals[i]];
+            fatigue += dia[minerals[i]];
             
         else if(pickType == 1)
-            total += iron[minerals[i]];
+            fatigue += iron[minerals[i]];
         else
-            total += stone[minerals[i]];
+            fatigue += stone[minerals[i]];
     }
-    return total;
-    
+    return fatigue;
 }
 int solution(vector<int> picks, vector<string> minerals) {
-    int answer = 0;
-    
-    int pickNum = picks[0] + picks[1] + picks[2];
-    int mineralNum = minerals.size();
-    int curIdx = 0;
-    while(curIdx <= mineralNum && pickNum > 0)
+    vector<int> picks2;
+    for(int i = 0; i<3; i++)
     {
-        vector<int> fatigue(3, 125);
-        if(picks[0] >= 1)
-            fatigue[0] = computeFatigue(minerals, curIdx, 0);
-        if(picks[1] >= 1)
-            fatigue[1] = computeFatigue(minerals, curIdx, 1);
-        if(picks[2] >= 1)
-            fatigue[2] = computeFatigue(minerals, curIdx, 2);
-        
-        int minIdx = min_element(fatigue.begin(), fatigue.end()) - fatigue.begin();
-        answer += fatigue[minIdx];
-        pickNum[minIdx]--;
-        curIdx += 5;
+        for(int j = 0; j<picks[i]; j++)
+            picks2.push_back(i);
     }
-    
+    int mineralNum = minerals.size();
+    int answer = 25 * mineralNum;
+    int needPickNum = ceil((double)mineralNum/5);
+    if(needPickNum < picks2.size()) picks2.resize(needPickNum);
+    do
+    {
+        int fatigue = 0;
+        int idx = 0;
+        for(int i = 0; i<picks2.size(); i++)
+        {
+            fatigue += computeFatigue(picks2[i], min(idx, mineralNum-1), min(idx+5, mineralNum), minerals);
+            idx += 5;
+        }
+        answer = min(fatigue, answer);
+        
+    }while(next_permutation(picks2.begin(), picks2.end()));
     return answer;
 }
