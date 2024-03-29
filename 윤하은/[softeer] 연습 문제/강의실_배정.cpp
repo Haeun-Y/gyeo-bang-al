@@ -5,30 +5,27 @@
 using namespace std;
 int n;
 vector<pair<int, int>> classes;
-bool cmp(pair<int, int> a, pair<int, int> b)
+bool cmp(pair<int, int> a, pair<int, int> b) 
 {
-    return a.second < b.second;
+    if(a.second == b.second)
+        return a.first < b.first;
+    else return a.second < b.second;
 }
 int computeMaxClass()
 {
-    int result = 0;
-
-    vector<pair<int, int>> v = classes;
-    
-    while(v.size() > 0) {
-        sort(v.begin(), v.end(), cmp);
+    sort(classes.begin(), classes.end(), cmp);
+    int beforeEndTime = classes[0].second;
+    //cout << classes[0].first << "~" << classes[0].second << "\n";
+    int result = 1;
+    for(int i = 1; i<classes.size();i++) {
+        pair<int, int> cur = classes[i];
+        if(beforeEndTime > cur.first)
+            continue;
         result++;
-        vector<pair<int, int>> v2;
-        pair<int, int> cur = v[0];
-        
-        for(int i = 1; i<v.size(); i++) {
-            if(cur.second <= v[i].first) 
-                v2.push_back(v[i]);
-        }
-        v = v2;
+        beforeEndTime = cur.second;
+        //cout << cur.first << "~" << cur.second << "\n";
     }
     return result;
-    
     
 }
 int main(int argc, char** argv)
