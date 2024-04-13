@@ -70,3 +70,57 @@ vector<string> solution(vector<vector<string>> plans) {
     }
     return answer;
 }
+/*
+//중심 반복문 -> while 문 하나로 수정해보기
+vector<string> solution(vector<vector<string>> plans) {
+    vector<string> answer;
+    sort(plans.begin(), plans.end(), cmp);
+    stack<pair<string, int>> s;
+    int hwNum = plans.size();
+    
+    s.push({plans[0][0], computeMin(plans[0][2])});
+    int i = 0;
+    int curTime = computeMin(plans[0][1]);
+    
+    while(!s.empty() && i < hwNum-1)
+    {
+        int nextStartTime = computeMin(plans[i+1][1]);
+        
+        pair<string, int> curHw = s.top();
+        s.pop();
+                
+        int targetFinTime = curTime + curHw.second;
+        if(targetFinTime == nextStartTime)
+        {
+            answer.push_back(curHw.first);
+            s.push({plans[i+1][0], computeMin(plans[i+1][2])});
+            i++;
+            break;
+        }
+        else if(targetFinTime > nextStartTime)
+        {
+            s.push({curHw.first, curHw.second - (nextStartTime - curTime)});
+            s.push({plans[i+1][0], computeMin(plans[i+1][2])});
+            i++;
+            break;
+        }
+        else//targetFinTime < nextStartTime
+        {
+            answer.push_back(curHw.first);
+            curTime = targetFinTime;   
+        }
+                
+                
+    }
+    
+    answer.push_back(plans[hwNum-1][0]);
+    while(!s.empty())
+    {
+        pair<string, int> curHw = s.top();
+        s.pop();
+        answer.push_back(curHw.first);
+    }
+    return answer;
+}
+
+*/
