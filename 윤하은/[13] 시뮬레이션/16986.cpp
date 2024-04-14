@@ -1,4 +1,4 @@
-//240413
+//240414
 //BOJ 16986 인싸들의 가위바위보
 //GOLD 3
 #include <iostream>
@@ -27,34 +27,41 @@ int playGame()
     {
         int motion1 = motionInfo[participant1][gameInfo[participant1].first];
         int motion2 = motionInfo[participant2][gameInfo[participant2].first];
-
+        //cout << participant1 << " and " << participant2 << " played game.\n";
+        //cout << motion1 << " vs " << motion2 << "\n";
         int result = winLose[motion1][motion2];//participant1 기준 결과
+        
+        gameInfo[participant1].first++;
+        gameInfo[participant2].first++;
 
         if(result == 0)//participant1 lose
         {
             gameInfo[participant2].second++;
             participant1 = nextParticipant(participant1, participant2);
+            //cout << participant1 << " lose\n";
         }
         else if(result == 1)//participant1 draw
         {
-            if(participant1 > participant2)
+            //cout << "***draw***\n";
+            if(participant1 < participant2)
             {
                 gameInfo[participant2].second++;
                 participant1 = nextParticipant(participant1, participant2);
+                //cout << participant1 << " lose\n";
             }
             else
             {
                 gameInfo[participant1].second++;
                 participant2 = nextParticipant(participant1, participant2);
+                //cout << participant1 << " win\n";
             }
         }
         else//result == 2, participant1 win
         {
             gameInfo[participant1].second++;
             participant2 = nextParticipant(participant1, participant2);
+            //cout << participant1 << " win\n";
         }
-        gameInfo[participant1].first++;
-        gameInfo[participant2].first++;
 
         if(gameInfo[0].second == requiredWinNum) return 1;
         else if(gameInfo[1].second == requiredWinNum || gameInfo[2].second == requiredWinNum) return 0;
@@ -84,8 +91,8 @@ int solution()
 }
 int main(void)
 {
-    //ios::sync_with_stdio(false);
-    //cin.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
     cin >> n >> requiredWinNum;
     winLose = vector<vector<int>>(n+1, vector<int>(n+1));
