@@ -40,19 +40,21 @@ int solution()
 {
     int size = pow(4, m);
     cout << "size : " << size <<"\n";
-    const int maxSeqNum = 15;
+    const int maxSeqNum = n;
     vector<int> v(size, 1);
 
     
-    for(int i = 1; i<=15; i++)
+    for(int i = 1; i<=n; i++)//i개의 초염기서열이 있다고 가정함
     {
-        for(int j = 0; j<i; j++) v[j] = 0;
+        cout << "i : " << i << "\n";
+        for(int j = 0; j<i; j++) v[j] = 0;//전체 size 개의 가능한 초염기서열 조합 중 i개를 선택할 것임
 
+        //for(int j = 0; j<size; j++) cout <<  v[]
         do
         {
             vector<bool> isCovered(n, false);
             for(int k = 0; k<size; k++)
-            {
+            {   
                 if(v[k] == 0) //selected
                     coverSeq(k, isCovered);
             }
@@ -65,6 +67,8 @@ int solution()
              
         }while(next_permutation(v.begin(), v.end()));
     }
+
+    return n;
     
     
 }
@@ -80,7 +84,7 @@ int main(int argc, char** argv)
         cin >> seq[i];
     
 
-    cout << solution();
+    cout << "answer : " << solution();
 
    return 0;
 }
