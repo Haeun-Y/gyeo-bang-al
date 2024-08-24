@@ -1,6 +1,5 @@
 //240822 BOJ 1759 암호 만들기
 //GOLD 5
-//틀렸습니다
 #include <bits/stdc++.h>
 using namespace std;
 int l, c;
@@ -50,7 +49,7 @@ int main(void)
         cin >> alphabets[i];
         
     sort(alphabets.begin(), alphabets.end());
-    for(int i = 0; i<c; i++) cout << alphabets[i] << " ";
+    //for(int i = 0; i<c; i++) cout << alphabets[i] << " ";
     
     solution(-1, 0, 0, 0);
     
