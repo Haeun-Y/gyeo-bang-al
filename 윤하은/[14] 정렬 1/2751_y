@@ -1,0 +1,21 @@
+//BOJ 2751
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(void)
+{
+	int numOfNum;
+	cin >> numOfNum;
+
+	vector<int> list(numOfNum);
+
+	for (int i = 0; i < numOfNum; i++)
+		cin >> list[i]
+
+	//오름차순
+	sort(list.begin(), list.end());
+
+	for (int i = 0; i < numOfNum; i++)
+	  cout << list[i] << "\n";	
+
+}
